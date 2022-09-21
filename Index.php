@@ -1,3 +1,40 @@
+
+<?php
+
+    include ('database.php');
+
+
+    $statusStud = "";
+    $credentials = "";
+    if(isset($_POST['scanned'])){
+        $text = $_POST['scanned'];
+        $sql = "INSERT INTO testreg(testreg) VALUES ('$text')";
+        if($conn->query($sql) === TRUE){
+            $credentials =  $text;
+
+        }else{
+            $credentials =  "Error: " .$sql . "<br>" . conn-> error;
+        }
+    
+    
+        $verify = "SELECT INTO testreg(testreg) VALUES ('$text')";
+    
+    
+         $verify= $conn->query("SELECT name FROM students WHERE name = '$text' ");
+            if($verify->num_rows >=1 )
+            {
+            $statusStud =  "Welcome Heron!";
+            }
+            else
+            {
+            $statusStud =  "Invalid QR Code - not registered";
+            }
+          
+    
+        // header("location: index.php");
+    }
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -71,6 +108,15 @@
             position: absolute;
         }
 
+        .statuses {
+            margin-left: 63%;
+            margin-top: 13%;
+            font-size: 30px;
+            font-family: Poppins;
+            z-index: 1;
+            position: absolute;
+        }
+
     </style>
     </head>
     
@@ -90,35 +136,74 @@
         </div>
 
 
-        <form action="database_scan.php" method="POST">
+
+     
+       <form action="" method="POST">
             <div class="results">
-                        <div id="result" name="scanned">___________________ </div>
+                 <input class="results" id="result" name="scanned" placeholder="-----------" value="<?php echo $credentials; ?>"readonly>
             </div>
-        </form>
+
+            <div class="statuses">
+                        <div id="status" name="status">
+                            <?php 
+                            echo $statusStud;
+                            ?>
+                        </div>
+                        <!-- <input type="text" name="txt" value="Hello" onchange="myFunction(this.value)"> -->
+            </div>
+
+        </form> 
 
 
         <div class="row, camera">
             <div class="col">
                 <div style="width:45%;" id="reader"></div>
             </div>
-
             
 
         <script type="text/javascript">
+
+            
             function onScanSuccess(qrCodeMessage) {
-                document.getElementById('result').innerHTML = '<span class="result">'+qrCodeMessage+'</span>';
-                document.getElementById('QRScanned').innerHTML = qrCodeMessage;
+                // alert(qrCodeMessage);
+                document.getElementById('result').value = qrCodeMessage;
+                // document.getElementById('QRScanned').value = qrCodeMessage;
                 document.forms[0].submit();
             }
+
             function onScanError(errorMessage) {
             //handle scan error
+            }
+
+
+            // document.getElementById("status").innerHTML = " ;  ?>";
+            // document.getElementById('status').innerHTML = 'thirdy';
+            console.log(document.getElementById('result').innerText);
+
+            function check(){
+                var cookieValue = document.getElementById('result').getAttribute('value');
+                alert(cookieValue);
+                // if( document.getElementById('result').innerHTML == '___________________'){
+                //     console.log("ito");
+                // }
             }
 
             var html5QrcodeScanner = new Html5QrcodeScanner(
                 "reader", { fps: 10, qrbox: 300 });
             html5QrcodeScanner.render(onScanSuccess, onScanError);
-        </script>
 
-    
+
+
+            //     // Check browser support
+            // if (typeof(Storage) !== "undefined") {
+            // // Store
+            // localStorage.setItem("stats", "<?php echo $statusStud ;  ?>");
+            // // Retrieve
+            // document.getElementById("status").innerHTML = localStorage.getItem("stats");
+            // } else {
+            // document.getElementById("status").innerHTML = "Sorry, your browser does not support Web Storage...";
+            // }
+
+        </script>
     </body>
 </html>

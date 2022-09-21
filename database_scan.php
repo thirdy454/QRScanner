@@ -18,10 +18,13 @@
 
         $sql = "INSERT INTO testreg (CRED) VALUES('$scanresult')";
         if($conn->query($sql) ===TRUE) {
-            ECHO "Successfully inserted";
+            echo "Successfully inserted";
         } else {
             echo "Error : " . $sql . "<br>" . $conn->error;
         }
+
+    
+
     }
 
     $conn->close();
