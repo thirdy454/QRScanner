@@ -117,6 +117,24 @@
             position: absolute;
         }
 
+        .watermarkumak {
+            height: 8%;
+            width: 21%;
+            left: 2%;
+            margin-top: -17%;
+            z-index: 1;
+            position: absolute;
+        }
+
+        .watermarkcomsoc {
+            height: 8%;
+            width: 12%;
+            right: 1%;
+            margin-top: 29%;
+            z-index: 1;
+            position: absolute;
+        }
+
     </style>
     </head>
     
@@ -126,6 +144,11 @@
             <img src='Images/HeronsWelcomes.png' alt="Herons Welcome Text" class="eventtextlogo">
         </div>
         
+
+        <div>
+            <img src='Images/WATERMARK UMAK.png' alt="UMak" class="watermarkumak">
+            <img src='Images/WATERMARK COMSOC.png' alt="ComSoc" class="watermarkcomsoc">
+        </div>
         
 
         <div class="rectangle"></div>    
